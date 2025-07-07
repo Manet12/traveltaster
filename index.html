@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Taster - Find Great Food While Traveling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #28A745;
+            --secondary: #FFB347;
+            --gray: #F8F9FA;
+            --dark: #2C3E50;
+            --border: #E1E8ED;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #34C759);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+
+        .page {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gray);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 60px 1rem 1.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Food Spots */
+        .food-spots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .spot-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .spot-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .spot-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .spot-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spot-info {
+            padding: 1.5rem;
+        }
+
+        .rating {
+            color: var(--secondary);
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .price-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .badge {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+		        .spot-cards {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .spot-cards:hover {
+            transform: translateY(-5px);
+        }
+
+        .spot-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .spot-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spot-info {
+            padding: 1.5rem;
+        }
+
+        .rating {
+            color: var(--secondary);
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .price-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .badge {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        /* Cuisine Grid */
+        .cuisine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .cuisine-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cuisine-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .cuisine-card.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--gray);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #218838;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features,
+            .food-spots {
+                grid-template-columns: 1fr;
+            }
+        }
+        .about-content h1,
+        .about-content h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .about-content p {
+            margin-bottom: 1rem;
+        }
+        .mission-grid, .values-list, .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .mission-card, .value-item, .stat-item {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .mission-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        .cta-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            margin-left: 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-secondary:hover {
+            background: #ffa726;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                Travel Taster
+            </div>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#" onclick="showPage('home')" class="nav-link active">Home</a></li>
+                    <li><a href="#" onclick="showPage('explore')" class="nav-link">Explore</a></li>
+                    <li><a href="#" onclick="showPage('cuisines')" class="nav-link">Food Category</a></li>
+                    <li><a href="#" onclick="showPage('about')" class="nav-link">About</a></li>
+                    <li><a href="#" onclick="showPage('contact')" class="nav-link">Contact us</a></li>
+                </ul>
+                <button class="mobile-menu" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+              <div class="container">
+                    <h1>Find Great Food While Traveling</h1>
+                    <p>Discover safe, affordable restaurants and street food wherever you go</p>
+                    
+                    <div class="search-box">
+                        <input type="text" placeholder="Search for food spots..." class="search-input">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3> <a href="https://www.google.com/maps/search/?api=1&query=food+resturent" target="_blank" style="text-decoration: none; color: inherit;">
+                        
+							Find Nearby</a></h3>
+                        <p>Discover great food spots near your location</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Safe & Clean</h3>
+                        <p>Verified hygiene ratings and safety reviews</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Budget Friendly</h3>
+                        <p>Filter by price to match your budget</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-gem"></i>
+                        <h3>Hidden Gems</h3>
+                        <p>Local favorites off the beaten path</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Explore Page -->
+<section id="explore" class="page">
+    <div class="container">
+        <h2>Explore Food Spots</h2>
+        <p>Browse restaurants and food places in your area</p>
+
+        <div class="map-placeholder">
+            <i class="fas fa-map"></i>
+            <p>Interactive Map Coming Soon</p>
+        </div>
+
+        <div class="food-spots">
+            <div class="spot-card">
+                <div class="spot-image">
+                    <img src="https://scontent.fcmb2-2.fna.fbcdn.net/v/t39.30808-6/474614188_625202600066864_4155629688359296760_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeHL44Ro2uMP2H_1CZrYPekuTXAgQFEm3DVNcCBAUSbcNV83OjI1nYYXPckUGU4JWJE-7WaJt1ORU5ayfujOM264&_nc_ohc=9FXDK8CbsGAQ7kNvwGxjwBQ&_nc_oc=Adl6M0IzqcKEKElyspYBurIRPTxnFnXjovLIA8nocwEtEBEfcR-cNZcNRqFfcQrcKPI&_nc_zt=23&_nc_ht=scontent.fcmb2-2.fna&_nc_gid=uc6Q14Za4saL0NgiYpFYqQ&oh=00_AfNbBTP4bZIRpklbOMxhNfImLmMashcFhD7y91UaHhJ7Wg&oe=6866AFAA" alt="Mannar Restaurant">
+                </div>
+              <div class="spot-info">
+                    <h3>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Mannar+Restaurant" target="_blank" style="text-decoration: none; color: inherit;">
+                            Mannar Restaurant
+                        </a>
+                    </h3>
+                    <div class="rating">⭐⭐⭐⭐⭐ 4.8 (127 reviews)</div>
+                <p>Authentic local food with excellent hygiene standards</p>
+                  <span class="price-tag">Under LKR 500</span>
+                  <span class="badge">Chinese</span>
+                </div>
+            </div>
+
+            <div class="spot-card">
+                <div class="spot-image">
+                    <img src="https://www.theexchange.my/contentassets/5ad67b461b834b1d9b94a33644a53c23/cafe-colombo-sf.png?width=300&height=400&upscale=false&mode=max&quality=80" alt="Cafe Colombo">
+                </div>
+              <div class="spot-info">
+                <h3>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Cafe+Colombo" target="_blank" style="text-decoration: none; color: inherit;">
+                            Cafe Colombo
+                        </a>
+                    </h3>
+                    <div class="rating">⭐⭐⭐⭐⭐ 4.6 (89 reviews)</div>
+                <p>Cozy cafe with great coffee and local dishes</p>
+                  <span class="price-tag">LKR 1000&nbsp;</span>
+                  <span class="badge">Popular</span>
+                </div>
+            </div>
+			
+			<div class="spot-card">
+    <div class="spot-image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrXD_nqJmRvKxd3guW2OAz97S_O43Y6pXnr5oXroEeGAurJ-BC8G9OZ1xrJudwXwmX4OM&usqp=CAU" alt="Tea Trails Cafe">
+    </div>
+    <div class="spot-info">
+        <h3>
+            <a href="https://www.google.com/maps/search/sri+lankan+express+restaurant+google+maps/@6.8288228,79.8949035,11z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; color: inherit;">
+              Sri Lanakan Express Restaurants </a>
+        </h3>
+        <div class="rating">⭐⭐⭐⭐ 4.4 (102 reviews)</div>
+        <p>Charming riverside Restaurant with Ceylon Traditional Foods</p>
+        <span class="price-tag">LKR 700</span>
+        <span class="badge">Traditional</span>
+    </div>
+</div>
+
+<div class="spot-card">
+    <div class="spot-image">
+        <img src="https://findit-resources.s3.us-east-2.amazonaws.com/account/profilePictures/1633082729925.jpg" alt="Spice House">
+    </div>
+    <div class="spot-info">
+        <h3>
+            <a href="https://www.google.com/maps/place/Muluthangeya+(%E0%B6%B8%E0%B7%94%E0%B7%85%E0%B7%94%E0%B6%AD%E0%B7%90%E0%B6%B1%E0%B7%8A%E0%B6%9C%E0%B7%99%E0%B6%BA)/@6.9527914,80.2097528,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae3a9207bb5dbdb:0x9590a42f047dc68!8m2!3d6.9527914!4d80.2123277!16s%2Fg%2F11frp9f6pc?entry=ttu&g_ep=EgoyMDI1MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; color: inherit;">
+              Muluthangeya Restuarant
+          </a>
+        </h3>
+        <div class="rating">⭐⭐⭐⭐⭐ 4.9 (150 reviews)</div>
+        <p>Rich and flavorful Sri Lankan curries with a spicy kick</p>
+        <span class="price-tag">LKR 1200</span>
+        <span class="badge">Top Rated</span>
+    </div>
+</div>
+			
+			<div class="spot-card">
+    <div class="spot-image">
+        <img src="https://scontent.fcmb2-2.fna.fbcdn.net/v/t39.30808-6/235852924_122488213451687_2024004330546207369_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEidkChPS32qTp3oFiKl_nBvHDwSL9K4Ey8cPBIv0rgTGJYkCRcz1tpBkXXeEq_cUZAd6TSWdzmPNWrMfLc5wfZ&_nc_ohc=FRKDRWwvRGkQ7kNvwEqreqr&_nc_oc=Adl65_sA51GWuE0dEr96c3dH2x2CsASqpn_pn3mBj8ktDaFhXEj7DzfRzpqclR_dKVM&_nc_zt=23&_nc_ht=scontent.fcmb2-2.fna&_nc_gid=znBrWzyhNIJ1sxQgNZeFfg&oh=00_AfOmYbBckYTm4ZkfborCoC3xU3Hc2x4sh4pfZ6k66Dvcvw&oe=686AC34C" alt="Tea Trails Cafe">
+    </div>
+    <div class="spot-info">
+        <h3>
+            <a href="https://www.google.com/maps/search/sambole/@6.9527843,80.1299271,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; color: inherit;">
+              Sambole
+          </a>
+        </h3>
+        <div class="rating">⭐⭐⭐⭐ 4.4 (102 reviews)</div>
+        <p>Charming traditional sri lankan pure taste</p>
+        <span class="price-tag">LKR 700</span>
+        <span class="badge">Traditional</span>
+    </div>
+</div>
+
+<div class="spot-card">
+    <div class="spot-image">
+        <img src="https://www.vitopizza.lk/images/index/vito-logo.png" alt="Spice House">
+    </div>
+    <div class="spot-info">
+        <h3>
+            <a href="https://www.google.com/maps/search/vito+pizza/@7.0950486,80.0910987,11z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; color: inherit;">
+                Spice House
+            </a>
+        </h3>
+        <div class="rating">⭐⭐⭐⭐⭐ 4.9 (150 reviews)</div>
+        <p>Rich and flavorful Sri Lankan wood&nbsp; fired Pizzas</p>
+        <span class="price-tag">LKR 1200</span>
+        <span class="badge">Pizza Lovers</span>
+    </div>
+</div>
+        </div>
+    </div>
+	
+	
+</section>
+
+
+        <!-- Cuisines Page -->
+        <section id="cuisines" class="page">
+            <div class="container">
+                <h2>Choose Your food</h2>
+                <p>Filter food spots by food type</p>
+                
+                <div class="cuisine-grid">
+                    <div class="cuisine-card" onclick="selectCuisine(this)">
+                        <h3>Local Food</h3>
+                        <p>Traditional regional dishes</p>
+                        <span class="badge">Popular</span>
+                    </div>
+                    <div class="cuisine-card" onclick="selectCuisine(this)">
+                        <h3>Street Food</h3>
+                        <p>Local street vendors</p>
+                        <span class="badge">Budget</span>
+                    </div>
+                    <div class="cuisine-card" onclick="selectCuisine(this)">
+                        <h3>Vegetarian</h3>
+                        <p>Plant-based options</p>
+                    </div>
+                    <div class="cuisine-card" onclick="selectCuisine(this)">
+                        <h3>Halal</h3>
+                        <p>Certified halal restaurants</p>
+                        <span class="badge">Verified</span>
+                    </div>
+                    <div class="cuisine-card" onclick="selectCuisine(this)">
+                        <h3>Seafood</h3>
+                        <p>Fresh catches and coastal food</p>
+                    </div>
+                    <div class="cuisine-card" onclick="selectCuisine(this)">
+                        <h3>Asian Fusion</h3>
+                        <p>Modern Asian flavors</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- About Page -->
+        <section id="about" class="page">
+            <div class="container">
+                <div class="about-content">
+                    <h1>About Travel Taster</h1>
+                    <p class="intro">Your trusted food finder on the go - connecting hungry travelers with unforgettable local flavors</p>
+
+                    <div class="story-section">
+                        <h2>Our Story</h2>
+                        <p>Travel Taster was born from a simple frustration: arriving in a new city, hungry and excited to try local cuisine, but having no idea where to find the best authentic food experiences. We've all been there - scrolling through countless reviews, wondering if that 5-star rating is genuine, or if we're about to walk into a tourist trap.</p>
+                        <p>Founded by passionate food lovers and seasoned travelers, Travel Taster bridges the gap between wanderlust and genuine culinary discovery. We believe that food is the gateway to understanding a culture, and that every meal should be an adventure worth remembering.</p>
+                    </div>
+
+                    <h2>What We Do</h2>
+                    <div class="mission-grid">
+                        <div class="mission-card">
+                            <div class="mission-icon">🍽️</div>
+                            <h3>Curated Discoveries</h3>
+                            <p>We handpick restaurants, street food vendors, and hidden gems that locals actually love, not just tourist hotspots.</p>
+                        </div>
+                        <div class="mission-card">
+                            <div class="mission-icon">🗺️</div>
+                            <h3>Local Insights</h3>
+                            <p>Our recommendations come with insider tips, cultural context, and stories that make every meal meaningful.</p>
+                        </div>
+                        <div class="mission-card">
+                            <div class="mission-icon">📱</div>
+                            <h3>Smart Suggestions</h3>
+                            <p>Whether you're craving comfort food or seeking adventure, we match you with perfect dining experiences based on your preferences.</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">1,200+</span>
+                            <span class="stat-label">Restaurants Featured</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Cities Covered</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">25K+</span>
+                            <span class="stat-label">Happy Foodies</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">4.8★</span>
+                            <span class="stat-label">Average Rating</span>
+                        </div>
+                    </div>
+
+                    <h2>Our Values</h2>
+                    <div class="values-list">
+                        <div class="value-item">
+                            <h4>Authenticity First</h4>
+                            <p>We prioritize genuine local experiences over flashy tourist destinations.</p>
+                        </div>
+                        <div class="value-item">
+                            <h4>Community Driven</h4>
+                            <p>Our recommendations are powered by real locals and experienced travelers.</p>
+                        </div>
+                        <div class="value-item">
+                            <h4>Cultural Respect</h4>
+                            <p>We approach every cuisine with respect for its traditions and cultural significance.</p>
+                        </div>
+                        <div class="value-item">
+                            <h4>Sustainable Tourism</h4>
+                            <p>We support local businesses and promote responsible travel practices.</p>
+                        </div>
+                    </div>
+
+                    <div class="team-section">
+                        <h2>Our Mission</h2>
+                        <p>To transform how people discover and experience food while traveling, one authentic meal at a time. We're building a community where every bite tells a story, every restaurant has a voice, and every traveler becomes a more conscious explorer.</p>
+                    </div>
+
+                    <div class="cta-section">
+                        <h2>Join the Journey</h2>
+                        <p>Ready to taste your way through the world's most incredible destinations? Whether you're a curious foodie, a seasoned traveler, or a local restaurant owner, there's a place for you in the Travel Taster community.</p>
+                        <a href="#contact" class="btn-primary">Get Started</a>
+                        <a href="mailto:traveltaster@gmail.com" class="btn-secondary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <p>Get in touch with feedback or suggestions</p>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea rows="5" required placeholder="Tell us your thoughts..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Other Ways to Reach Us ;</h3>
+                    <p><strong>Email:</strong> traveltaster@gmail.com</p>
+                    <p><strong>For Restaurants:</strong> &nbsp;www.traveltaster.com</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Travel Taster. Your trusted food finder on the go.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('nav-menu').classList.remove('show');
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('show');
+        }
+
+        function selectCuisine(element) {
+            element.classList.toggle('selected');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.querySelector('.search-btn');
+            const searchInput = document.querySelector('.search-input');
+            
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    alert(`Searching for: "${query}"`);
+                }
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+            
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you! We will get back to you soon.');
+                    this.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
